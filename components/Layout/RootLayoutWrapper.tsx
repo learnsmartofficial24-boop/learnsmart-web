@@ -5,6 +5,7 @@ import { LandingNav } from '@/components/Navigation/LandingNav';
 import { Footer } from '@/components/Layout/Footer';
 import { ToastContainer } from '@/components/ui/Toast';
 import { useToastStore } from '@/store/toastStore';
+import { ChatWidget } from '@/components/Smarty/ChatWidget';
 
 export function RootLayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -19,7 +20,8 @@ export function RootLayoutWrapper({ children }: { children: React.ReactNode }) {
   const content = (
     <>
       {children}
-     <ToastContainer toasts={toasts.map(toast => ({ ...toast, onClose: removeToast }))} />
+      <ToastContainer toasts={toasts.map((toast) => ({ ...toast, onClose: removeToast }))} />
+      <ChatWidget />
     </>
   );
 
@@ -33,7 +35,8 @@ export function RootLayoutWrapper({ children }: { children: React.ReactNode }) {
         <LandingNav />
         <main className="flex-1">{children}</main>
         <Footer />
-        <ToastContainer toasts={toasts.map(toast => ({ ...toast, onClose: removeToast }))} />
+        <ToastContainer toasts={toasts.map((toast) => ({ ...toast, onClose: removeToast }))} />
+        <ChatWidget />
       </div>
     );
   }
