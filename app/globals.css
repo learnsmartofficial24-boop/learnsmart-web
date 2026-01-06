@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+/* Design System - CSS Variables */
+:root {
+  /* Primary Brand Colors */
+  --primary-sage: #6B8E7A;
+  --background-beige: #F5F1EB;
+  --text-charcoal: #1F2933;
+  --accent-gold: #D4A574;
+  
+  /* Semantic Colors - Light Mode */
+  --background: var(--background-beige);
+  --foreground: var(--text-charcoal);
+  --primary: var(--primary-sage);
+  --primary-hover: #5a7867;
+  --accent: var(--accent-gold);
+  --accent-hover: #c49463;
+  
+  /* Surface Colors */
+  --card: #FFFFFF;
+  --card-hover: #FAFAF8;
+  --border: #E4E1DB;
+  --border-hover: #D4D1CB;
+  
+  /* Status Colors */
+  --success: #4CAF50;
+  --warning: #FFC107;
+  --error: #F44336;
+  --info: #2196F3;
+  
+  /* Shadows */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-elevation: 0 8px 24px rgba(0, 0, 0, 0.12);
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  
+  /* Spacing Scale */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
+  
+  /* Transitions */
+  --transition-fast: 200ms;
+  --transition-base: 300ms;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode Colors */
+  --background: #0F1419;
+  --foreground: #F0EDE5;
+  --primary: #7BA089;
+  --primary-hover: #8cb29a;
+  --accent: #D4A574;
+  --accent-hover: #e0b585;
+  
+  /* Surface Colors */
+  --card: #1A1F2E;
+  --card-hover: #242936;
+  --border: #2A2F3E;
+  --border-hover: #3A3F4E;
+  
+  /* Shadows */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-elevation: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-border: var(--border);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  transition: background var(--transition-base), color var(--transition-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Classes */
+h1, h2, h3, h4 {
+  font-family: var(--font-satoshi), var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+  color: var(--foreground);
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+h4 {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+}
+
+/* Code Typography */
+code, pre {
+  font-family: var(--font-jetbrains-mono), 'Courier New', monospace;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-base) ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp var(--transition-base) ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

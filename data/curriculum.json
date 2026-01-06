@@ -1,0 +1,35 @@
+{
+  "classes": {
+    "1-5": {
+      "subjects": ["English", "Hindi", "Maths", "EVS"]
+    },
+    "6-10": {
+      "subjects": ["Maths", "Science", "Social Science", "English", "Hindi"]
+    },
+    "11-12": {
+      "streams": {
+        "science": {
+          "core": ["Physics", "Chemistry", "English Core"],
+          "specializations": {
+            "pcm": {
+              "required": "Mathematics",
+              "optional": ["Computer Science", "Informatics Practices", "Psychology"]
+            },
+            "pcb": {
+              "required": "Biology",
+              "optional": ["Computer Science", "Informatics Practices", "Psychology"]
+            }
+          }
+        },
+        "commerce": {
+          "core": ["Accountancy", "Business Studies", "Economics", "English Core"],
+          "optional": ["Mathematics", "Informatics Practices", "Entrepreneurship"]
+        },
+        "arts": {
+          "core": ["History", "Political Science", "Geography", "Sociology", "Economics"],
+          "optional": ["Psychology", "Legal Studies", "Home Science"]
+        }
+      }
+    }
+  }
+}
