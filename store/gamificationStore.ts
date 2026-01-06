@@ -89,6 +89,7 @@ export const useGamificationStore = create<GamificationState>()(
         set((state) => ({
           totalQuestionsAnswered: state.totalQuestionsAnswered + 1,
           correctAnswers: correct ? state.correctAnswers + 1 : state.correctAnswers,
+          totalQuizzesTaken: state.totalQuizzesTaken + 1,
         })),
 
       resetStats: () =>

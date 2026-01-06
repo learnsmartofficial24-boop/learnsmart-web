@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import * as LucideIcons from 'lucide-react';
-import { Sparkles, ArrowRight, CheckCircle2, Info } from 'lucide-react';
+import { Sparkles, ArrowRight, CheckCircle2, Info, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Concept } from '@/lib/concepts';
 import { Button } from '@/components/ui';
@@ -155,12 +155,13 @@ const ConceptCard: React.FC<ConceptCardProps> = ({
             {aiExplanation ? 'AI Insight Loaded' : 'Ask Smarty'}
           </Button>
           <Button
-            onClick={onPractice}
-            variant="outline"
-            className="border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/5"
-          >
-            Practice Problems
-          </Button>
+             onClick={onPractice}
+             variant="outline"
+             className="border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)]/5"
+           >
+             <Zap className="w-4 h-4 mr-2" />
+             Practice Problems
+           </Button>
         </div>
         <div className="flex items-center gap-4">
           <Button
