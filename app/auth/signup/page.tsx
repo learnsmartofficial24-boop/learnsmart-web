@@ -1,40 +1,51 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { AuthForm } from '@/components/Auth/AuthForm';
+import { useRouter } from 'next/navigation';
+import { SignupWizard } from '@/components/Auth/SignupWizard';
+import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
-import { useAuthStore } from '@/store/authStore';
-import { generateId } from '@/lib/utils';
-import type { AuthFormData } from '@/lib/types';
 
 export default function SignupPage() {
   const router = useRouter();
-  const { setUser } = useAuthStore();
-  const [isLoading, setIsLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSignup = async (data: AuthFormData) => {
-    setIsLoading(true);
-    
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    // Create user and redirect to stream selection
-    setUser({
-      id: generateId(),
-      name: data.name || '',
-      email: data.email,
-      class: 11, // Default to 11 for stream selection
-      subjects: [],
-      theme: 'light',
-      createdAt: new Date(),
-    });
-    
-    setIsLoading(false);
-    router.push('/auth/stream-select');
+  const handleComplete = () => {
+    setShowSuccess(true);
+    // Redirect to dashboard after a short delay
+    setTimeout(() => {
+      router.push('/dashboard');
+    }, 2000);
   };
+
+  if (showSuccess) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-md mx-auto"
+      >
+        <Card padding="lg">
+          <div className="text-center">
+            <div className="mx-auto w-20 h-20 bg-[var(--success)] bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+              <svg className="w-10 h-10 text-[var(--success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            
+            <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">
+              Welcome to LearnSmart! 🎉
+            </h1>
+            
+            <p className="text-[var(--foreground)] opacity-70 mb-6">
+              Your account has been created successfully. Redirecting to dashboard...
+            </p>
+          </div>
+        </Card>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -42,30 +53,7 @@ export default function SignupPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card padding="lg">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[var(--primary)] mb-2">
-            Join LearnSmart
-          </h1>
-          <p className="text-[var(--foreground)] opacity-70">
-            Create your account and start learning
-          </p>
-        </div>
-
-        <AuthForm mode="signup" onSubmit={handleSignup} isLoading={isLoading} />
-
-        <div className="mt-6 text-center">
-          <p className="text-sm text-[var(--foreground)] opacity-70">
-            Already have an account?{' '}
-            <Link
-              href="/auth/login"
-              className="text-[var(--primary)] hover:underline font-medium"
-            >
-              Sign in
-            </Link>
-          </p>
-        </div>
-      </Card>
+      <SignupWizard onComplete={handleComplete} />
     </motion.div>
   );
 }
