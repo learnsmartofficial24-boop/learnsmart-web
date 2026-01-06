@@ -1,70 +1,109 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface LearningProgress {
-  subjectId: string;
-  chapterId: string;
-  conceptId: string;
-  completed: boolean;
-  lastStudied: Date;
-  timeSpent: number;
+interface ChapterProgress {
+  class: number;
+  subject: string;
+  chapter: string;
+  currentConceptId: string;
+  conceptsCompleted: string[];
+  lastViewed: string; // ISO string for Date
+  timeSpent: number; // in seconds
 }
 
 interface LearningState {
-  progress: LearningProgress[];
-  currentSubject: string | null;
-  currentChapter: string | null;
+  chapterProgress: Record<string, ChapterProgress>; // Key format: "class-subject-chapter"
   
-  setProgress: (progress: LearningProgress) => void;
-  setCurrentSubject: (subjectId: string | null) => void;
-  setCurrentChapter: (chapterId: string | null) => void;
-  getProgressBySubject: (subjectId: string) => LearningProgress[];
-  getProgressByChapter: (chapterId: string) => LearningProgress[];
+  setCurrentConcept: (classNum: number, subject: string, chapter: string, conceptId: string) => void;
+  markConceptCompleted: (classNum: number, subject: string, chapter: string, conceptId: string) => void;
+  getProgress: (classNum: number, subject: string, chapter: string) => ChapterProgress | undefined;
+  updateTimeSpent: (classNum: number, subject: string, chapter: string, seconds: number) => void;
   clearProgress: () => void;
 }
 
 export const useLearningStore = create<LearningState>()(
   persist(
     (set, get) => ({
-      progress: [],
-      currentSubject: null,
-      currentChapter: null,
+      chapterProgress: {},
 
-      setProgress: (newProgress) =>
+      setCurrentConcept: (classNum, subject, chapter, conceptId) =>
         set((state) => {
-          const existingIndex = state.progress.findIndex(
-            (p) =>
-              p.subjectId === newProgress.subjectId &&
-              p.chapterId === newProgress.chapterId &&
-              p.conceptId === newProgress.conceptId
-          );
+          const key = `${classNum}-${subject}-${chapter}`;
+          const current = state.chapterProgress[key] || {
+            class: classNum,
+            subject,
+            chapter,
+            currentConceptId: conceptId,
+            conceptsCompleted: [],
+            lastViewed: new Date().toISOString(),
+            timeSpent: 0,
+          };
 
-          if (existingIndex >= 0) {
-            const updated = [...state.progress];
-            updated[existingIndex] = newProgress;
-            return { progress: updated };
-          }
-
-          return { progress: [...state.progress, newProgress] };
+          return {
+            chapterProgress: {
+              ...state.chapterProgress,
+              [key]: {
+                ...current,
+                currentConceptId: conceptId,
+                lastViewed: new Date().toISOString(),
+              },
+            },
+          };
         }),
 
-      setCurrentSubject: (subjectId) =>
-        set({ currentSubject: subjectId }),
+      markConceptCompleted: (classNum, subject, chapter, conceptId) =>
+        set((state) => {
+          const key = `${classNum}-${subject}-${chapter}`;
+          const current = state.chapterProgress[key] || {
+            class: classNum,
+            subject,
+            chapter,
+            currentConceptId: conceptId,
+            conceptsCompleted: [],
+            lastViewed: new Date().toISOString(),
+            timeSpent: 0,
+          };
 
-      setCurrentChapter: (chapterId) =>
-        set({ currentChapter: chapterId }),
+          if (!current.conceptsCompleted.includes(conceptId)) {
+            return {
+              chapterProgress: {
+                ...state.chapterProgress,
+                [key]: {
+                  ...current,
+                  conceptsCompleted: [...current.conceptsCompleted, conceptId],
+                },
+              },
+            };
+          }
+          return state;
+        }),
 
-      getProgressBySubject: (subjectId) =>
-        get().progress.filter((p) => p.subjectId === subjectId),
+      getProgress: (classNum, subject, chapter) => {
+        const key = `${classNum}-${subject}-${chapter}`;
+        return get().chapterProgress[key];
+      },
 
-      getProgressByChapter: (chapterId) =>
-        get().progress.filter((p) => p.chapterId === chapterId),
+      updateTimeSpent: (classNum, subject, chapter, seconds) =>
+        set((state) => {
+          const key = `${classNum}-${subject}-${chapter}`;
+          const current = state.chapterProgress[key];
+          if (!current) return state;
 
-      clearProgress: () =>
-        set({ progress: [], currentSubject: null, currentChapter: null }),
+          return {
+            chapterProgress: {
+              ...state.chapterProgress,
+              [key]: {
+                ...current,
+                timeSpent: current.timeSpent + seconds,
+              },
+            },
+          };
+        }),
+
+      clearProgress: () => set({ chapterProgress: {} }),
     }),
     {
-      name: 'learnsmartLearning',
+      name: 'learnsmartProgress',
     }
   )
 );
