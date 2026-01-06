@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { RootLayoutWrapper } from "@/components/Layout/RootLayoutWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,8 +16,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LearnSmart - AI-Powered Learning Platform",
-  description: "Modern, concept-based learning with AI assistance for students",
+  title: "LearnSmart — Learn Smarter. Not Harder.",
+  description: "Concept-based learning platform powered by AI. Master your subjects with clarity and focus.",
+  keywords: "Learning platform, AI tutor, NCERT, concept learning, student success",
 };
 
 export default function RootLayout({
@@ -29,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        {children}
+        <RootLayoutWrapper>{children}</RootLayoutWrapper>
       </body>
     </html>
   );
