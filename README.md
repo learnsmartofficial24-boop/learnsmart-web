@@ -1,2 +1,12 @@
-# learnsmart-web
-LearnSmart is a modern, AI-assisted educational web application focused on concept-based learning, built with a clean, distraction-free user experience.
+# LearnSmart Web
+
+LearnSmart is a modern, AI-powered educational web platform designed for concept-based learning with a clean, professional interface.
+
+## Tech Stack (Planned)
+- Next.js (TypeScript)
+- Tailwind CSS
+- AI-assisted learning
+- Responsive Web Design
+
+## Status
+Early development (MVP stage).
