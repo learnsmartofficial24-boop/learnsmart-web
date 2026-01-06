@@ -20,6 +20,53 @@ export interface MCQ {
   difficulty: 'easy' | 'medium' | 'hard';
 }
 
+export interface QuizQuestion extends MCQ {
+  conceptId?: string;
+  timeSpent?: number;
+  isAnswered?: boolean;
+  selectedAnswer?: number;
+  isCorrect?: boolean;
+}
+
+export interface QuestionAttempt {
+  questionId: string;
+  selectedAnswer: number;
+  isCorrect: boolean;
+  timeSpent: number;
+  timestamp: Date;
+}
+
+export interface QuizSession {
+  id: string;
+  class: number;
+  subject: string;
+  chapter: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  questionCount: number;
+  questions: QuizQuestion[];
+  currentQuestionIndex: number;
+  startTime: Date;
+  endTime?: Date;
+  score: number;
+  status: 'not_started' | 'in_progress' | 'completed';
+}
+
+export interface QuizResult {
+  id: string;
+  class: number;
+  subject: string;
+  chapter: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  score: number;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  timeSpent: number;
+  date: Date;
+  questions: QuestionAttempt[];
+  accuracy: number;
+}
+
 export interface Curriculum {
   classes: {
     [key: string]: {
