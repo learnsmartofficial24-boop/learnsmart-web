@@ -233,3 +233,55 @@ export interface AnalyticsFilters {
 }
 
 export type ChartViewType = 'line' | 'bar' | 'pie' | 'radar' | 'heatmap';
+
+export enum MasteryLevel {
+  NotStarted = 'Not Started',
+  InProgress = 'In Progress',
+  Competent = 'Competent',
+  Master = 'Master'
+}
+
+export enum RelationType {
+  Prerequisite = 'prerequisite',
+  Reinforces = 'reinforces',
+  Enables = 'enables',
+  Related = 'related'
+}
+
+export interface ConceptNode {
+  id: string;
+  label: string;
+  type: 'concept';
+  masteryLevel: MasteryLevel;
+  progressPercentage: number;
+  subject: string;
+  chapter: string;
+  description: string;
+  icon?: string;
+  x?: number;
+  y?: number;
+}
+
+export interface ConceptEdge {
+  source: string;
+  target: string;
+  type: RelationType;
+  label?: string;
+}
+
+export interface ConceptMap {
+  id: string;
+  subject: string;
+  chapter?: string;
+  nodes: ConceptNode[];
+  edges: ConceptEdge[];
+}
+
+export interface LearningPath {
+  id: string;
+  name: string;
+  description: string;
+  concepts: string[]; // IDs of concepts in sequence
+  currentConceptId: string;
+  progress: number; // percentage
+}

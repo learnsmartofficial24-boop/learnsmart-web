@@ -10,6 +10,7 @@ import {
   Trophy,
   Settings,
   X,
+  Map,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -22,6 +23,7 @@ const menuItems = [
   { icon: Home, label: 'Dashboard', href: '/dashboard' },
   { icon: BookOpen, label: 'My Classes', href: '/dashboard/classes' },
   { icon: GraduationCap, label: 'Learning', href: '/learn' },
+  { icon: Map, label: 'Concept Maps', href: '/learn/maps' },
   { icon: Trophy, label: 'Achievements', href: '/dashboard/achievements' },
   { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
 ];
