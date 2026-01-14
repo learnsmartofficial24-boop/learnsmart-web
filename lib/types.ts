@@ -378,3 +378,221 @@ export interface SessionStats {
   xpEarned: number;
   newCardsLearned: number;
 }
+
+// Social Features & Leaderboards Types
+
+export interface UserProfile extends User {
+  bio?: string;
+  joinDate: Date;
+  lastActive: Date;
+  totalXP: number;
+  currentLevel: number;
+  currentStreak: number;
+  longestStreak: number;
+  totalQuizzes: number;
+  totalConcepts: number;
+  totalStudyTime: number;
+  averageQuizScore: number;
+  favoriteSubject?: string;
+  achievementsCount: number;
+  followersCount: number;
+  followingCount: number;
+  groupsCount: number;
+  privacy: {
+    showProfile: boolean;
+    showProgress: boolean;
+    showAchievements: boolean;
+    showStats: boolean;
+  };
+  theme: 'light' | 'dark';
+  socialLinks?: {
+    twitter?: string;
+    linkedin?: string;
+    website?: string;
+  };
+}
+
+export interface StudyGroup {
+  id: string;
+  name: string;
+  description: string;
+  type: 'study' | 'social' | 'competitive';
+  subject?: string;
+  class?: number;
+  avatar?: string;
+  coverImage?: string;
+  isPrivate: boolean;
+  memberIds: string[];
+  adminIds: string[];
+  moderatorIds: string[];
+  rules: string[];
+  createdAt: Date;
+  lastActivity: Date;
+  totalXP: number;
+  achievementsCount: number;
+  postCount: number;
+  tags: string[];
+  memberCount: number;
+}
+
+export interface GroupMembership {
+  userId: string;
+  groupId: string;
+  role: 'member' | 'moderator' | 'admin' | 'owner';
+  joinedAt: Date;
+  lastActive: Date;
+  contributionScore: number; // XP earned within group
+  postsCount: number;
+  achievementsCount: number;
+}
+
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  category: 'learning' | 'consistency' | 'performance' | 'social' | 'special';
+  rarity: 'common' | 'uncommon' | 'rare' | 'legendary';
+  points: number;
+  unlockCriteria: {
+    type: 'quiz_score' | 'streak' | 'concepts' | 'xp' | 'time' | 'groups' | 'friends' | 'special';
+    value: number;
+    subject?: string;
+    difficulty?: 'easy' | 'medium' | 'hard';
+  };
+  hidden?: boolean; // Secret achievements
+  maxUnlocks?: number; // Some achievements can be earned multiple times
+}
+
+export interface UserAchievement {
+  userId: string;
+  achievementId: string;
+  earnedAt: Date;
+  progress: number; // 0-100 for progress-based achievements
+  isMaxed?: boolean; // For achievements that can be earned multiple times
+}
+
+export interface LeaderboardEntry {
+  userId: string;
+  username: string;
+  avatar?: string;
+  currentLevel: number;
+  totalXP: number;
+  currentStreak: number;
+  rank: number;
+  previousRank?: number;
+  rankChange: number; // Positive = moved up, negative = moved down
+  lastActive: Date;
+  subjects?: string[];
+  class?: number;
+}
+
+export interface Streak {
+  userId: string;
+  currentStreak: number;
+  longestStreak: number;
+  lastStudyDate: Date;
+  streakStartDate: Date;
+  totalStudyDays: number;
+  averageStreak: number;
+}
+
+export interface SocialConnection {
+  id: string;
+  followerId: string;
+  followingId: string;
+  createdAt: Date;
+  status: 'active' | 'blocked' | 'pending';
+}
+
+export interface Post {
+  id: string;
+  groupId?: string;
+  userId: string;
+  content: string;
+  type: 'achievement' | 'study_update' | 'group_announcement' | 'general' | 'milestone';
+  attachments?: string[];
+  likes: string[]; // User IDs who liked
+  comments: Comment[];
+  createdAt: Date;
+  updatedAt?: Date;
+  isPinned?: boolean;
+  visibility: 'public' | 'friends' | 'groups';
+}
+
+export interface Comment {
+  id: string;
+  postId: string;
+  userId: string;
+  content: string;
+  parentId?: string; // For replies to comments
+  likes: string[];
+  createdAt: Date;
+  updatedAt?: Date;
+}
+
+export interface Notification {
+  id: string;
+  userId: string;
+  type: 'achievement' | 'follower' | 'group_invite' | 'group_mention' | 'streak_milestone' | 'rank_change' | 'group_activity';
+  title: string;
+  message: string;
+  data?: any; // Additional data (achievement ID, group ID, etc.)
+  isRead: boolean;
+  createdAt: Date;
+  actionUrl?: string;
+}
+
+export interface LeaderboardFilter {
+  type: 'global' | 'subject' | 'class' | 'streak';
+  subject?: string;
+  class?: number;
+  timePeriod: 'week' | 'month' | 'all_time';
+  metric: 'xp' | 'streak' | 'quizzes' | 'concepts';
+}
+
+export interface GroupMessage {
+  id: string;
+  groupId: string;
+  userId: string;
+  content: string;
+  type: 'text' | 'image' | 'system';
+  attachments?: string[];
+  mentions: string[]; // User IDs mentioned
+  reactions: { [emoji: string]: string[] }; // emoji -> user IDs
+  createdAt: Date;
+  editedAt?: Date;
+  replyToId?: string;
+}
+
+export interface FriendActivity {
+  userId: string;
+  activity: {
+    type: 'achievement_unlocked' | 'streak_milestone' | 'quiz_completed' | 'level_up' | 'group_joined';
+    description: string;
+    timestamp: Date;
+    data?: any;
+  };
+}
+
+export interface SocialStats {
+  totalUsers: number;
+  activeUsers24h: number;
+  totalGroups: number;
+  totalAchievements: number;
+  averageStreak: number;
+  topSubjects: { subject: string; count: number }[];
+  newUsersThisWeek: number;
+}
+
+export interface GroupAnalytics {
+  groupId: string;
+  memberCount: number;
+  activeMembers7d: number;
+  averageActivity: number;
+  topPerformers: string[]; // User IDs
+  groupXP: number;
+  achievementsUnlocked: number;
+  messagesCount: number;
+  joinRate: number; // New members per week
+}
