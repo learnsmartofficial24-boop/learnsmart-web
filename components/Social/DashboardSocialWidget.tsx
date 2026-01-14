@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Trophy, Users, Award, TrendingUp, ArrowRight, Flame } from 'lucide-react';
 import { useSocialStore } from '../../store/socialStore';
@@ -15,6 +16,7 @@ interface DashboardSocialWidgetProps {
 export const DashboardSocialWidget: React.FC<DashboardSocialWidgetProps> = ({
   className
 }) => {
+  const router = useRouter();
   const { user } = useAuthStore();
   const {
     getProfile,
@@ -42,7 +44,12 @@ export const DashboardSocialWidget: React.FC<DashboardSocialWidgetProps> = ({
           <Users className="w-5 h-5 text-[var(--primary)]" />
           <h3 className="text-lg font-semibold text-[var(--foreground)]">Social Hub</h3>
         </div>
-        <Button variant="ghost" size="sm" className="text-[var(--primary)]">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-[var(--primary)]"
+          onClick={() => router.push('/profile/me')}
+        >
           <span>View All</span>
           <ArrowRight className="w-4 h-4 ml-1" />
         </Button>
@@ -166,7 +173,7 @@ export const DashboardSocialWidget: React.FC<DashboardSocialWidgetProps> = ({
           variant="outline"
           size="sm"
           className="flex items-center justify-center space-x-1"
-          onClick={() => window.location.href = '/social/leaderboard'}
+          onClick={() => router.push('/social/leaderboard')}
         >
           <Trophy className="w-4 h-4" />
           <span>Leaderboard</span>
@@ -176,7 +183,7 @@ export const DashboardSocialWidget: React.FC<DashboardSocialWidgetProps> = ({
           variant="outline"
           size="sm"
           className="flex items-center justify-center space-x-1"
-          onClick={() => window.location.href = '/groups'}
+          onClick={() => router.push('/groups')}
         >
           <Users className="w-4 h-4" />
           <span>Groups</span>

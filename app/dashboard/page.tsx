@@ -7,6 +7,7 @@ import { PageContainer } from '@/components/Layout/PageContainer';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { BookOpen, Trophy, Flame, Star } from 'lucide-react';
+import { DashboardSocialWidget } from '@/components/Social/DashboardSocialWidget';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -85,91 +86,99 @@ export default function DashboardPage() {
           })}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card padding="lg">
-            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
-              Your Profile
-            </h2>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-[var(--foreground)] opacity-70">Class</span>
-                <Badge variant="info">{user?.class}</Badge>
-              </div>
-              {user?.stream && (
-                <div className="flex justify-between">
-                  <span className="text-[var(--foreground)] opacity-70">Stream</span>
-                  <Badge variant="default">
-                    {user.stream.charAt(0).toUpperCase() + user.stream.slice(1)}
-                  </Badge>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card padding="lg">
+                <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+                  Your Profile
+                </h2>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-[var(--foreground)] opacity-70">Class</span>
+                    <Badge variant="info">{user?.class}</Badge>
+                  </div>
+                  {user?.stream && (
+                    <div className="flex justify-between">
+                      <span className="text-[var(--foreground)] opacity-70">Stream</span>
+                      <Badge variant="default">
+                        {user.stream.charAt(0).toUpperCase() + user.stream.slice(1)}
+                      </Badge>
+                    </div>
+                  )}
+                  {user?.specialization && (
+                    <div className="flex justify-between">
+                      <span className="text-[var(--foreground)] opacity-70">
+                        Specialization
+                      </span>
+                      <Badge variant="success">
+                        {user.specialization.toUpperCase()}
+                      </Badge>
+                    </div>
+                  )}
                 </div>
-              )}
-              {user?.specialization && (
-                <div className="flex justify-between">
-                  <span className="text-[var(--foreground)] opacity-70">
-                    Specialization
-                  </span>
-                  <Badge variant="success">
-                    {user.specialization.toUpperCase()}
-                  </Badge>
+              </Card>
+
+              <Card padding="lg">
+                <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+                  Your Subjects
+                </h2>
+                {user?.subjects && user.subjects.length > 0 ? (
+                  <div className="flex flex-wrap gap-2">
+                    {user.subjects.map((subject) => (
+                      <Badge key={subject} variant="default">
+                        {subject}
+                      </Badge>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-[var(--foreground)] opacity-70">
+                    No subjects selected yet
+                  </p>
+                )}
+              </Card>
+            </div>
+
+            <Card padding="lg">
+              <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+                Quick Actions
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="p-4 rounded-[var(--radius-md)] bg-[var(--card-hover)] hover:bg-[var(--border)] transition-colors cursor-pointer">
+                  <BookOpen className="text-[var(--primary)] mb-2" size={24} />
+                  <h3 className="font-semibold text-[var(--foreground)] mb-1">
+                    Start Learning
+                  </h3>
+                  <p className="text-sm text-[var(--foreground)] opacity-70">
+                    Continue where you left off
+                  </p>
                 </div>
-              )}
-            </div>
-          </Card>
-
-          <Card padding="lg">
-            <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
-              Your Subjects
-            </h2>
-            {user?.subjects && user.subjects.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {user.subjects.map((subject) => (
-                  <Badge key={subject} variant="default">
-                    {subject}
-                  </Badge>
-                ))}
+                <div className="p-4 rounded-[var(--radius-md)] bg-[var(--card-hover)] hover:bg-[var(--border)] transition-colors cursor-pointer">
+                  <Trophy className="text-[var(--accent)] mb-2" size={24} />
+                  <h3 className="font-semibold text-[var(--foreground)] mb-1">
+                    Take a Quiz
+                  </h3>
+                  <p className="text-sm text-[var(--foreground)] opacity-70">
+                    Test your knowledge
+                  </p>
+                </div>
+                <div className="p-4 rounded-[var(--radius-md)] bg-[var(--card-hover)] hover:bg-[var(--border)] transition-colors cursor-pointer">
+                  <Star className="text-[var(--info)] mb-2" size={24} />
+                  <h3 className="font-semibold text-[var(--foreground)] mb-1">
+                    AI Tutor
+                  </h3>
+                  <p className="text-sm text-[var(--foreground)] opacity-70">
+                    Get help from AI
+                  </p>
+                </div>
               </div>
-            ) : (
-              <p className="text-[var(--foreground)] opacity-70">
-                No subjects selected yet
-              </p>
-            )}
-          </Card>
-        </div>
-
-        <Card padding="lg">
-          <h2 className="text-xl font-semibold text-[var(--foreground)] mb-4">
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-[var(--radius-md)] bg-[var(--card-hover)] hover:bg-[var(--border)] transition-colors cursor-pointer">
-              <BookOpen className="text-[var(--primary)] mb-2" size={24} />
-              <h3 className="font-semibold text-[var(--foreground)] mb-1">
-                Start Learning
-              </h3>
-              <p className="text-sm text-[var(--foreground)] opacity-70">
-                Continue where you left off
-              </p>
-            </div>
-            <div className="p-4 rounded-[var(--radius-md)] bg-[var(--card-hover)] hover:bg-[var(--border)] transition-colors cursor-pointer">
-              <Trophy className="text-[var(--accent)] mb-2" size={24} />
-              <h3 className="font-semibold text-[var(--foreground)] mb-1">
-                Take a Quiz
-              </h3>
-              <p className="text-sm text-[var(--foreground)] opacity-70">
-                Test your knowledge
-              </p>
-            </div>
-            <div className="p-4 rounded-[var(--radius-md)] bg-[var(--card-hover)] hover:bg-[var(--border)] transition-colors cursor-pointer">
-              <Star className="text-[var(--info)] mb-2" size={24} />
-              <h3 className="font-semibold text-[var(--foreground)] mb-1">
-                AI Tutor
-              </h3>
-              <p className="text-sm text-[var(--foreground)] opacity-70">
-                Get help from AI
-              </p>
-            </div>
+            </Card>
           </div>
-        </Card>
+
+          <div className="lg:col-span-1">
+            <DashboardSocialWidget />
+          </div>
+        </div>
       </motion.div>
     </PageContainer>
   );
