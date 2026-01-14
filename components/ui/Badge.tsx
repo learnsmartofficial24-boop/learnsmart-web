@@ -4,16 +4,19 @@ import { HTMLAttributes, forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'success' | 'warning' | 'error' | 'info';
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'danger';
   size?: 'sm' | 'md' | 'lg';
 }
 
 const variantStyles = {
   default: 'bg-[var(--primary)] text-white',
+  primary: 'bg-[var(--primary)] text-white',
+  secondary: 'bg-[var(--card)] text-[var(--foreground)] border border-[var(--border)]',
   success: 'bg-[var(--success)] text-white',
   warning: 'bg-[var(--warning)] text-[var(--text-charcoal)]',
   error: 'bg-[var(--error)] text-white',
   info: 'bg-[var(--info)] text-white',
+  danger: 'bg-[var(--error)] text-white',
 };
 
 const sizeStyles = {

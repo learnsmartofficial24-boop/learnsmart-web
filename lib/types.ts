@@ -285,3 +285,96 @@ export interface LearningPath {
   currentConceptId: string;
   progress: number; // percentage
 }
+
+// Flashcard & Spaced Repetition Types
+
+export interface Flashcard {
+  id: string;
+  deckId: string;
+  front: string; // Question/prompt
+  back: string; // Answer/explanation
+  conceptId?: string;
+  createdAt: Date;
+  lastReviewed?: Date;
+}
+
+export interface FlashcardDeck {
+  id: string;
+  name: string;
+  description: string;
+  class?: number;
+  subject?: string;
+  chapter?: string;
+  conceptId?: string;
+  cardIds: string[];
+  difficulty: 'easy' | 'medium' | 'hard';
+  createdAt: Date;
+  lastStudied?: Date;
+}
+
+export interface SmSuperheroData {
+  easeFactor: number; // EF: How easy the card is (1.3-2.5+)
+  interval: number; // I: Days until next review
+  repetitions: number; // n: Number of successful reviews
+}
+
+export interface ReviewMetrics {
+  cardId: string;
+  quality: number; // 1-5 rating
+  easeFactor: number;
+  interval: number;
+  repetitions: number;
+  reviewDate: Date;
+  nextReviewDate: Date;
+  timeTaken?: number; // Seconds spent on this card
+}
+
+export interface CardProgress {
+  cardId: string;
+  smData: SmSuperheroData;
+  nextReviewDate: Date;
+  totalReviews: number;
+  successfulReviews: number;
+  failedReviews: number;
+  averageQuality: number;
+  successRate: number;
+  lastReviewed: Date;
+  isDue: boolean;
+  retentionScore: number; // 0-100
+}
+
+export interface ReviewItem {
+  cardId: string;
+  dueDate: Date;
+  priority: number; // Higher = more urgent
+  estimatedDifficulty: 'easy' | 'medium' | 'hard';
+}
+
+export interface ReviewSchedule {
+  [date: string]: ReviewItem[]; // Map of ISO date strings to review items
+}
+
+export interface ReviewSession {
+  id: string;
+  deckId: string;
+  cardIds: string[];
+  currentIndex: number;
+  startTime: Date;
+  endTime?: Date;
+  reviews: ReviewMetrics[];
+  pausedAt?: Date;
+  status: 'not_started' | 'in_progress' | 'paused' | 'completed';
+}
+
+export interface SessionStats {
+  totalCardsReviewed: number;
+  cardsDueToday: number;
+  cardsDueTomorrow: number;
+  averageQuality: number;
+  cardsMastered: number; // Quality 5
+  cardsNeedReview: number; // Quality < 3
+  sessionDuration: number; // Seconds
+  cardsPerMinute: number;
+  xpEarned: number;
+  newCardsLearned: number;
+}
