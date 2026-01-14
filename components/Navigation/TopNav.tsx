@@ -70,7 +70,7 @@ export function TopNav({ onMenuClick }: TopNavProps) {
             {user && (
               <>
                 <Link
-                  href="/dashboard/profile"
+                  href="/profile/me"
                   className="p-2 rounded-[var(--radius-sm)] text-[var(--foreground)] hover:bg-[var(--card-hover)] transition-colors"
                 >
                   <User size={20} />

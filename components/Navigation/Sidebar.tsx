@@ -12,6 +12,8 @@ import {
   X,
   Map,
   Layers,
+  Users,
+  BarChart2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -26,8 +28,10 @@ const menuItems = [
   { icon: GraduationCap, label: 'Learning', href: '/learn' },
   { icon: Layers, label: 'Flashcards', href: '/review' },
   { icon: Map, label: 'Concept Maps', href: '/learn/maps' },
-  { icon: Trophy, label: 'Achievements', href: '/dashboard/achievements' },
-  { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+  { icon: Users, label: 'Study Groups', href: '/groups' },
+  { icon: BarChart2, label: 'Leaderboard', href: '/social/leaderboard' },
+  { icon: Trophy, label: 'Achievements', href: '/profile/me/achievements' },
+  { icon: Settings, label: 'Settings', href: '/profile/me/settings' },
 ];
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {

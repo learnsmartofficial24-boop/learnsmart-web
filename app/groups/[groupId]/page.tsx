@@ -8,7 +8,9 @@ import { useSocialStore } from '../../../store/socialStore';
 import { useAuthStore } from '../../../store/authStore';
 import { GroupChat } from '../../../components/Groups/GroupChat';
 import { GroupMembers } from '../../../components/Groups/GroupMembers';
+import { GroupAnnouncements } from '../../../components/Groups/GroupAnnouncements';
 import { Button } from '../../../components/ui/Button';
+import { cn } from '../../../lib/utils';
 
 export default function GroupPage() {
   const params = useParams();
@@ -129,6 +131,14 @@ export default function GroupPage() {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Announcements */}
+            <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg p-6">
+              <GroupAnnouncements
+                groupId={groupId}
+                isAdmin={isAdmin}
+              />
+            </div>
+
             {/* Group Stats */}
             <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg p-6">
               <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">
