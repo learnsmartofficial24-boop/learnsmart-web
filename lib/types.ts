@@ -123,3 +123,113 @@ export interface ValidationError {
   field: string;
   message: string;
 }
+
+export interface LearningMetrics {
+  totalXP: number;
+  currentLevel: number;
+  conceptsLearned: number;
+  quizAccuracy: number;
+  currentStreak: number;
+  averageQuizScore: number;
+  totalStudyTime: number;
+  totalQuestionsAnswered: number;
+  correctAnswers: number;
+}
+
+export interface ConceptProgress {
+  conceptId: string;
+  name: string;
+  masteryLevel: 'Not Started' | 'In Progress' | 'Competent' | 'Master';
+  progressPercentage: number;
+  timeSpent: number;
+  lastStudied: Date;
+  attempts: number;
+  averageScore: number;
+  difficulty: 'easy' | 'medium' | 'hard';
+}
+
+export interface QuizPerformance {
+  totalQuizzes: number;
+  averageScore: number;
+  accuracy: number;
+  timeSpent: number;
+  performanceByDifficulty: {
+    easy: { count: number; averageScore: number };
+    medium: { count: number; averageScore: number };
+    hard: { count: number; averageScore: number };
+  };
+  mostChallengingConcepts: string[];
+  improvementTrend: number;
+}
+
+export interface StudySession {
+  id: string;
+  date: Date;
+  duration: number;
+  subjects: string[];
+  conceptsStudied: string[];
+  quizTaken: boolean;
+  accuracy?: number;
+  xpEarned: number;
+}
+
+export interface ProgressTrend {
+  date: string;
+  accuracy: number;
+  conceptsCompleted: number;
+  studyTime: number;
+  quizScore: number;
+  xp: number;
+  streak: number;
+}
+
+export type SkillLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'Master';
+
+export interface SubjectsData {
+  [subject: string]: {
+    chapters: {
+      [chapter: string]: {
+        concepts: {
+          [concept: string]: {
+            difficulty: 'easy' | 'medium' | 'hard';
+            attempts: number;
+            averageScore: number;
+            lastStudied: string;
+            timeSpent: number;
+          };
+        };
+        totalTimeSpent: number;
+        conceptsCompleted: number;
+        totalConcepts: number;
+      };
+    };
+    subjectStats: {
+      totalTimeSpent: number;
+      averageAccuracy: number;
+      conceptsCompleted: number;
+      totalConcepts: number;
+    };
+  };
+}
+
+export interface Insight {
+  id: string;
+  type: 'highlight' | 'warning' | 'encouragement' | 'recommendation';
+  title: string;
+  message: string;
+  action?: {
+    label: string;
+    target: string;
+    type: 'concept' | 'quiz' | 'study';
+  };
+  timestamp: Date;
+}
+
+export interface AnalyticsFilters {
+  dateRange: '7d' | '30d' | '90d' | 'all';
+  subjects: string[] | 'all';
+  chapters: string[] | 'all';
+  difficulty: 'all' | 'easy' | 'medium' | 'hard';
+}
+
+export type ChartViewType = 'line' | 'bar' | 'pie' | 'radar' | 'heatmap';
